@@ -12,6 +12,7 @@ class Application
   index :'notifiers.queue'
   
   referenced_in :status
+  references_many :notifications
   embeds_many :notifiers
   accepts_nested_attributes_for :notifiers
   

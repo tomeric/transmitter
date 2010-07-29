@@ -6,8 +6,9 @@ describe Application do
   end
   
   describe "associations" do
-    it { should embed_many :notifiers    }
-    it { should be_referenced_in :status }
+    it { should embed_many :notifiers         }
+    it { should be_referenced_in :status      }
+    it { should reference_many :notifications }
   end
   
   describe "validations" do

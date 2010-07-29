@@ -1,6 +1,8 @@
 class NotificationsController < ApplicationController
   respond_to :html, :xml, :json
   
+  before_filter :load_application_by_api_key, :only => [:new, :create, :destroy]
+  
   # GET /notifications
   # GET /notifications.xml
   # GET /notifications.json
@@ -19,23 +21,29 @@ class NotificationsController < ApplicationController
   # GET /notifications/new.xml
   # GET /notifications/new.json
   def new
-    respond_with @notification = Notification.new
+    respond_with @notification = @application.notifications.new
   end
 
   # POST /notifications
   # POST /notifications.xml
   # POST /notifications.json
   def create
-    respond_with @notification = Notification.create(params[:notification])
+    respond_with @notification = @application.notifications.create(params[:notification])
   end
 
   # DELETE /notifications/1
   # DELETE /notifications/1.xml
   # DELETE /notifications/1.json
   def destroy
-    @notification = Notification.find(params[:id])
+    @notification = @application.notifications.find(params[:id])
     @notification.destroy
 
     respond_with @notification
+  end
+  
+  private
+  
+  def load_application_by_api_key
+    @application = Application.where(:api_key => params[:api_key]).first
   end
 end

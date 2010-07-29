@@ -8,6 +8,7 @@ class Notification
   field :message
   
   embeds_many :statuses
+  references_one :application
   
   ### VALIDATIONS:
   
