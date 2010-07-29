@@ -1,0 +1,9 @@
+%table
+  %thead
+    %tr
+      %th.name Name
+      %th.key Api key
+      %th.url Url
+      %th.actions{ :colspan => 2 }
+  %tbody
+    = render :partial => 'applications/application', :collection => applications

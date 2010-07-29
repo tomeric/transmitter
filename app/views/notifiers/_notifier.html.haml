@@ -1,0 +1,5 @@
+%tr
+  %td.queue= notifier.queue
+  %td.url= notifier.endpoint
+  %td.edit= link_to 'Edit', edit_application_notifier_path(notifier.application, notifier)
+  %td.delete= link_to 'Delete', application_notifier_path(notifier.application, notifier), :method => :delete, :confirm => 'Are you sure?'

@@ -1,0 +1,7 @@
+%tr
+  %td= status.application.name
+  %td= status.notifier.endpoint
+  %td= status.state
+  %td
+    - if status.exception?
+      %pre= status.exception

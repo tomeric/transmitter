@@ -1,0 +1,24 @@
+%p#breadcrumb
+  = link_to 'Applications', root_path
+  »
+  = @application.name 
+
+%h1= @application.name
+%p
+  %small= link_to 'Edit this application', edit_application_path(@application)
+
+- if @application.url
+  %p= link_to @application.url, @application.url
+%p
+  API Key:
+  %code= @application.api_key
+
+%h2 Notifiers
+- if @application.notifiers.present?
+  = render 'notifiers/notifiers', :notifiers => @application.notifiers
+
+- else
+  %p No notifiers configured yet
+
+%p
+  %small= link_to 'New notifier', new_application_notifier_path(@application)

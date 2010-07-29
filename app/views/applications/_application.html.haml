@@ -1,0 +1,7 @@
+%tr
+  %td= link_to application.name, application
+  %td
+    %code= application.api_key
+  %td= link_to_if application.url, application.url, application.url
+  %td= link_to 'Edit', edit_application_path(application)
+  %td= link_to 'Destroy', application, :confirm => 'Are you sure?', :method => :delete

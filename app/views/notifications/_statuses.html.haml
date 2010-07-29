@@ -1,0 +1,9 @@
+%table
+  %thead
+    %tr
+      %th.application Application
+      %th.endpoint Endpoint
+      %th.status State
+      %th.exception Exception
+  %tbody
+    = render :partial => 'status', :collection => statuses

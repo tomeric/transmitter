@@ -1,0 +1,8 @@
+%p#breadcrumb
+  Applications
+  |
+  = link_to 'Notifications', notifications_path
+
+%h1 Listing applications
+= render 'applications', :applications => @applications
+%p= link_to 'New application', new_application_path

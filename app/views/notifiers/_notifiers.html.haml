@@ -1,0 +1,8 @@
+%table
+  %thead
+    %tr
+      %th.queue Queue
+      %th.endpoint Endpoint
+      %th.actions{ :colspan => 2 } Actions
+  %tbody
+    = render :partial => 'notifiers/notifier', :collection => notifiers

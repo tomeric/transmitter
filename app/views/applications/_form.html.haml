@@ -1,0 +1,8 @@
+= semantic_form_for @application do |f|
+  = f.inputs 'Application' do
+    = f.input :name, :label => 'Name'
+    = f.input :api_key, :label => 'API key', :hint => "You will need this key in your client application"
+    = f.input :url, :label => 'URL'
+  
+  = f.buttons do
+    = f.commit_button

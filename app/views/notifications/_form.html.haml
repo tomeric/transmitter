@@ -1,0 +1,6 @@
+= semantic_form_for @notification do |f|
+  = f.inputs 'Notification' do
+    = f.input :queue
+    = f.input :message
+  = f.buttons do
+    = f.commit_button

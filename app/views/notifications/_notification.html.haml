@@ -1,0 +1,8 @@
+%tr
+  %td
+    = link_to notification do
+      = time_ago_in_words(notification.created_at)
+      ago
+  %td= notification.queue
+  %td
+    %pre= notification.message

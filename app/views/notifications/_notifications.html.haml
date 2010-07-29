@@ -1,0 +1,8 @@
+%table
+  %thead
+    %tr
+      %th.created Created
+      %th.queue Queue
+      %th.message Message
+  %tbody
+    = render :partial => 'notifications/notification', :collection => notifications

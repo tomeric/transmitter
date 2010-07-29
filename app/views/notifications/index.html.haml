@@ -1,0 +1,10 @@
+%p#breadcrumb
+  = link_to 'Applications', applications_path
+  |
+  Notifications
+
+%h1 Listing notifications
+- if @notifications.present?
+  = render 'notifications', :notifications => @notifications
+- else
+  %p No notifications yet!

@@ -1,0 +1,24 @@
+%p#breadcrumb
+  = link_to 'Notifications', notifications_path
+  » Notification
+
+%h1 Notification
+
+%p
+  Created:
+  = time_ago_in_words @notification.created_at
+  ago
+%p
+  Queue:
+  = @notification.queue
+
+%p
+  Message:
+  %br/
+  %code.pre= @notification.message
+
+%h2 Statuses
+- if @notification.statuses.present?
+  = render 'statuses', :statuses => @notification.statuses
+- else
+  %p No statuses yet!

@@ -1,0 +1,8 @@
+%p#breadcrumb
+  = link_to 'Applications', root_path
+  »
+  = link_to @application.name, @application
+  » Editing application
+
+%h1 Editing application
+= render 'form'
