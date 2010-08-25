@@ -13,6 +13,7 @@ class Application
   
   referenced_in :status
   references_many :notifications
+  
   embeds_many :notifiers
   accepts_nested_attributes_for :notifiers
   

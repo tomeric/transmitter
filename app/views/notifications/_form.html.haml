@@ -1,5 +1,5 @@
 = semantic_form_for @notification do |f|
-  = f.hidden_field :api_key, params[:api_key]
+  = hidden_field_tag :api_key, params[:api_key]
   = f.inputs 'Notification' do
     = f.input :queue
     = f.input :message
