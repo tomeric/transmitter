@@ -11,7 +11,7 @@ class Application
   index :api_key, :unique => true
   index :'notifiers.queue'
   
-  referenced_in :status
+  referenced_in :status, :class_name => 'Status'
   references_many :notifications
   
   embeds_many :notifiers

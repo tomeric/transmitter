@@ -28,7 +28,11 @@ class NotificationsController < ApplicationController
   # POST /notifications.xml
   # POST /notifications.json
   def create
-    respond_with @notification = Notification.create(params[:notification].merge(:application_id => @application.id))
+    @notification = Notification.new(params[:notification])
+    @notification.application = @application
+    @notification.save
+
+    respond_with @notification
   end
 
   # DELETE /notifications/1
