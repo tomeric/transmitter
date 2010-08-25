@@ -6,5 +6,6 @@
 %h1 Listing notifications
 - if @notifications.present?
   = render 'notifications', :notifications => @notifications
+  = will_paginate @notifications
 - else
   %p No notifications yet!

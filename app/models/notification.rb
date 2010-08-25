@@ -14,17 +14,25 @@ class Notification
   
   validates :queue, :presence => true
 
+  ### SCOPES:
+  
+  scope :latest, order_by(:created_at.desc)
+
   ### CALLBACKS:
   
   after_create :notify_applications_later
   
+  ### CLASS METHODS:
+  
   def self.notify_applications(notification_id)
     notification = find(notification_id)
 
-    Application.where('notifiers.queue' => notification.queue).each do |application|
+    Application.where('notifiers.queue' => notification.queue).find_each do |application|
       application.notify_later(notification)
     end
   end  
+  
+  ### PRIVATE METHODS:
   
   private
   

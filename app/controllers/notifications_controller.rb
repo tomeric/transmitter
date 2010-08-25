@@ -7,7 +7,7 @@ class NotificationsController < ApplicationController
   # GET /notifications.xml
   # GET /notifications.json
   def index
-    respond_with @notifications = Notification.all
+    respond_with @notifications = Notification.latest.paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /notifications/1
@@ -29,7 +29,7 @@ class NotificationsController < ApplicationController
   # POST /notifications.json
   def create
     @notification = Notification.new(params[:notification])
-    @notification.application = @application
+    # @notification.applicationd_id = @application.id
     @notification.save
 
     respond_with @notification
