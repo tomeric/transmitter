@@ -1,4 +1,10 @@
 %tr
+  %td
+    - if status.updated_at
+      %abbr{ :title => status.updated_at }= time_ago_in_words status.updated_at
+      ago
+    - else
+      unknown
   %td= status.application.name
   %td= status.notifier.endpoint
   %td= status.state

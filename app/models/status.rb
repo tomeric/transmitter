@@ -1,5 +1,6 @@
 class Status
   include Mongoid::Document
+  include Mongoid::Timestamps
   include Workflow
 
   ### ATTRIBUTES:
