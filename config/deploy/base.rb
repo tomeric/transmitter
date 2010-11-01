@@ -1,8 +1,8 @@
 # Multisite:
 load 'config/deploy/multisite'
 
-# Passenger:
-load 'config/deploy/passenger'
+# Unicorn:
+load 'config/deploy/unicorn'
 
 # Deployment:
 load 'config/deploy/config'

@@ -23,6 +23,10 @@ group :development do
   gem "capistrano"
 end
 
+group :production do
+  gem "unicorn"
+end
+
 group :test do
   gem "factory_girl_rails"
   gem "rspec-rails"

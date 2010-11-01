@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+class Runner
+  UNICORN_RAILS = 'unicorn_rails'
+  APP_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
+  class << self
+
+    def start
+      `cd #{APP_PATH}; bundle exec #{UNICORN_RAILS} -c #{APP_PATH}/config/unicorn.rb -E production -D`
+    end
+
+    def reload
+      if pid.nil?
+        start
+      else
+        `kill -s USR2 #{pid}`
+      end
+    end
+
+    def restart
+      stop
+      start
+    end
+
+    def graceful
+      `kill -s QUIT #{pid}"` unless pid.nil?
+      start
+    end
+
+    def stop
+      `kill #{pid}` unless pid.nil?
+    end
+
+    def pid
+      File.read("#{APP_PATH}/tmp/pids/unicorn.pid") rescue nil
+    end
+  end
+end
+
+case ARGV[0]
+when "start"
+  Runner.start
+when "reload"
+  Runner.reload
+when "restart"
+  Runner.restart
+when "stop"
+  Runner.stop
+else
+  STDERR.puts "usage ./script/unicorn [start|stop|restart|reload]"
+  exit(1)
+end
