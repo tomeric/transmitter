@@ -1,0 +1,8 @@
+staging:
+  application: "transmitter.io"
+  machine: "server.transmitter.io"
+  home_dir: "/home/transmitter"
+  user: "transmitter"
+  password: "whats the frequency"
+  rails_env: "production"
+  branch: "master"

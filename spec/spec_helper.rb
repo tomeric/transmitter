@@ -18,7 +18,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 Rspec.configure do |config|
   config.before(:suite) do
-    DatabaseCleaner.orm = 'mongoid'
+    DatabaseCleaner.orm      = :mongoid
     DatabaseCleaner.strategy = :truncation
   end
   
