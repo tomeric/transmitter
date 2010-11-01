@@ -40,11 +40,11 @@ namespace :db do
   desc "Create mongoid.yml in shared path"
   task :setup do
     db_config = ERB.new <<-YAML
-    production: &defaults
-      host: localhost
-      user: #{user}
-      password: #{password}
-      database: #{user}_transmitter_production
+production: &defaults
+  host: localhost
+  username: #{user}
+  password: #{password}
+  database: #{user}_transmitter_production
     YAML
 
     put db_config.result, "#{shared_path}/config/mongoid.yml"
