@@ -3,6 +3,11 @@
   %head
     %title Operator
     = stylesheet_link_tag :all
+    - if defined?(HoptoadNotifier)
+      :javascript
+        var notifierJsScheme = (("https:" == document.location.protocol) ? "https://" : "http://");
+        document.write(unescape("%3Cscript src='" + notifierJsScheme + "hoptoadapp.com/javascripts/notifier.js' type='text/javascript'%3E%3C/script%3E"));
+        Hoptoad.setKey('#{HoptoadNotifier.configuration.api_key}');
     = javascript_include_tag :jquery, :defaults
     = csrf_meta_tag
     %style

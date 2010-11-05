@@ -19,6 +19,9 @@ gem "navvy"
 gem "httparty"
 gem "addressable", :require => "addressable/uri"
 
+# Reporting:
+gem "hoptoad_notifier"
+
 group :development do
   gem "capistrano"
 end

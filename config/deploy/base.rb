@@ -14,6 +14,10 @@ load 'config/deploy/bundler'
 load 'config/deploy/console'
 load 'config/deploy/rvm'
 
+# Hoptoad:
+require File.expand_path('../../boot', __FILE__)
+require 'hoptoad_notifier/capistrano'
+
 namespace :deploy do
   task :default do
     transaction do
