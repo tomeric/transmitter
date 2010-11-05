@@ -1,4 +1,6 @@
-namespace :deploy do
+namespace :unicorn do
+  after "deploy", "unicorn:reload"
+
   desc "Start app server"
   task :start, :except => { :no_release => true } do
     run "cd #{current_path}; script/unicorn start"

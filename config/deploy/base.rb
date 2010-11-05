@@ -19,11 +19,11 @@ require File.expand_path('../../boot', __FILE__)
 require 'hoptoad_notifier/capistrano'
 
 namespace :deploy do
+  after :default, :cleanup
+
   task :default do
     transaction do
       update
-      reload
-      cleanup
     end
   end
 
