@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../../config/application', __FILE__)
+
+class Runner
+  APP_PATH  = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+  RAILS_ENV = ENV['RAILS_ENV'] || 'production'
+  
+  class << self
+    def start
+      Mongoid.logger = Logger.new(STDOUT)
+      
+      options = {
+        :ARGV     => ARGV,
+        :dir_mode => :normal,
+        :dir      => File.join(APP_PATH, 'tmp', 'pids')
+      }
+      
+      %x(mkdir -p '#{options[:dir]}')
+      
+      Daemons.run_proc('navvy', options) do
+        %x(cd #{APP_PATH}; RAILS_ENV=#{RAILS_ENV} rake navvy:work)
+      end
+    end
+    
+    def graceful
+      `kill -s QUIT #{pid}"` if pid
+      start
+    end
+
+    def stop
+      raise "Cannot kill that which does not exist" unless pid
+      `kill #{pid}`
+      `kill #{pid}`
+    end
+    
+    def restart
+      stop rescue nil
+      start
+    end
+    
+    def pid
+      File.read("#{APP_PATH}/tmp/pids/navvy.pid") rescue nil
+    end
+  end
+end
+
+case ARGV[0]
+when "start"
+  Runner.start
+when "restart"
+  Runner.restart
+when "stop"
+  Runner.stop
+else
+  STDERR.puts "usage ./script/navvy [start|stop|restart]"
+  exit(1)
+end

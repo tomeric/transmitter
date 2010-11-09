@@ -9,6 +9,7 @@ load 'config/deploy/config'
 load 'config/deploy/symlinks'
 load 'config/deploy/setup'
 load 'config/deploy/bundler'
+load 'config/deploy/navvy'
 
 # Remote tasks:
 load 'config/deploy/console'

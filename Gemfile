@@ -18,6 +18,7 @@ gem "formtastic"
 gem "navvy"
 gem "httparty"
 gem "addressable", :require => "addressable/uri"
+gem "daemons"
 
 # Reporting:
 gem "hoptoad_notifier"
