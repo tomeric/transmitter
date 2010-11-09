@@ -26,23 +26,14 @@ class Application
   
   before_validation :generate_api_key, :unless => :api_key?
   
-  ### CLASS METHODS:
-  
-  def self.notify(application_id, notification_id)
-    application  = Application.find(application_id)
-    notification = Notification.find(notification_id)
-    
-    notifiers = application.notifiers.find_all { |notifier| notifier.queue == notification.queue }
-    
-    notifiers.each do |notifier|
-      notifier.deliver_later(notification)
-    end
-  end
-  
   ### INSTANCE METHODS:
   
-  def notify_later(notification)
-    Navvy::Job.enqueue(Application, :notify, id, notification.id)
+  def notify_later(notification)    
+    notification_notifiers = notifiers.find_all { |notifier| notifier.queue == notification.queue }
+    
+    notification_notifiers.each do |notifier|
+      notifier.deliver_later(notification)
+    end
   end
   
   private

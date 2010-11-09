@@ -69,17 +69,17 @@ describe Notification do
       
       it "notifies applications that have a notifier set up for the specified queue" do
         @application = Factory(:application)
-        @application.notifiers.create!(:queue => 'this_queue', :endpoint => Faker::Internet.url)
+        @notifier    = @application.notifiers.create!(:queue => 'this_queue', :endpoint => Faker::Internet.url)
         
-        Navvy::Job.should_receive(:enqueue).with(Application, :notify, @application.id, anything)
+        Navvy::Job.should_receive(:enqueue).with(Notifier, :deliver, @application.id, @notifier.id, @notification.id)
         Notification.notify_applications(@notification.id)
       end
       
       it "does not notify applications that do not have a notifier set up for the specified queue" do
         @application = Factory(:application)
-        @application.notifiers.create!(:queue => 'other_queue', :endpoint => Faker::Internet.url)
+        @notifier    = @application.notifiers.create!(:queue => 'other_queue', :endpoint => Faker::Internet.url)
         
-        Navvy::Job.should_not_receive(:enqueue).with(Application, :notify, anything, anything)        
+        Navvy::Job.should_not_receive(:enqueue).with(Notifier, :deliver, anything, anything, anything)        
         Notification.notify_applications(@notification.id)
       end
     end

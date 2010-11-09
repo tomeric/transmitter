@@ -17,20 +17,20 @@ describe Application do
     it { should validate_uniqueness_of :api_key        }
   end
   
-  describe "class methods" do
-    before(:each) do
-      @endpoint = 'http://localhost/endpoint'
-      @message  = 'the message'
-    end
-    
-    describe "#notify" do
+  describe "instance methods" do
+    describe "#notify_later" do      
+      before(:each) do
+        @endpoint = 'http://localhost/endpoint'
+        @message  = 'the message'
+      end
+  
       it "starts delivery of notifications to notifiers in the same queue as the notification" do
         @notifier = @application.notifiers.create(:queue => 'this_queue', :endpoint => @endpoint)
         @notification = Factory(:notification, :queue => 'this_queue', :message => @message)
         
         Navvy::Job.should_receive(:enqueue).with(Notifier, :deliver, @application.id, @notifier.id, @notification.id)
         
-        Application.notify(@application.id, @notification.id)        
+        @application.notify_later(@notification)      
       end
       
       it "does not start delivery of notifications to notifiers in  a different queue as the notification" do
@@ -39,27 +39,8 @@ describe Application do
         
         Navvy::Job.should_not_receive(:enqueue).with(Notifier, :deliver, anything, anything, anything)
         
-        Application.notify(@application.id, @notification.id)
-      end
-    end
-  end
-  
-  describe "instance methods" do
-    describe "#notify_later" do
-      it "creates a Navvy::Job" do
-        @notification = Factory(:notification)
-        
-        lambda {
-          @application.notify_later(@notification)
-        }.should change(Navvy::Job, :count).by(1)
-      end
-      
-      it "enqueues Application#notify" do
-        @notification = Factory(:notification)
-        
-        Navvy::Job.should_receive(:enqueue).with(Application, :notify, @application.id, @notification.id)
         @application.notify_later(@notification)
-      end
+      end      
     end
   end
   
