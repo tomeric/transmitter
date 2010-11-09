@@ -15,6 +15,53 @@ describe Notification do
   end
   
   describe "class methods" do
+    describe "#clean!" do
+      before(:each) do
+        @application = Factory(:application)
+        @notifier    = Factory(:notifier, :application => @application)
+      end
+            
+      it "removes notifications that have no statuses" do
+        @notification_2 = Factory(:notification)
+                  
+        lambda {
+          Notification.clean!
+        }.should change(Notification, :count).by(-2)
+        
+        Notification.where(:_id => @notification.id  ).should_not be_present
+        Notification.where(:_id => @notification_2.id).should_not be_present
+      end
+      
+      it "removes notifications that have succesfully notified everyone" do
+        @notification_2 = Factory(:notification)
+        
+        [@notification, @notification_2].each do |notification|
+          notification.statuses.create(:application => @application, :state => 'processed', :notifier_id => @notifier.id)
+        end
+      
+        lambda {
+          Notification.clean!
+        }.should change(Notification, :count).by(-2)
+        
+        Notification.where(:_id => @notification.id  ).should_not be_present
+        Notification.where(:_id => @notification_2.id).should_not be_present       
+      end
+ 
+      it "does not remove notifications that have statuses that are not 'processed'" do
+        @notification_2 = Factory(:notification)
+        
+        @notification.statuses.create(  :application => @application, :notifier_id => @notifier.id, :state => 'queued')
+        @notification_2.statuses.create(:application => @application, :notifier_id => @notifier.id, :state => 'processed')
+        
+        lambda {
+          Notification.clean!
+        }.should change(Notification, :count).by(-1)
+        
+        Notification.where(:_id => @notification.id  ).should be_present
+        Notification.where(:_id => @notification_2.id).should_not be_present        
+      end
+    end
+    
     describe "#notify_applications" do
       before(:each) do
         @notification.update_attributes(:queue => 'this_queue')

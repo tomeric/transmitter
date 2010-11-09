@@ -17,7 +17,7 @@ class Status
   validates :notifier_id,  :presence => true
   validates :application,  :presence => true
 
-  # STATES:
+  ### STATES:
 
   workflow do
     state :queued do

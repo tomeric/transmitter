@@ -24,6 +24,10 @@ class Notification
   
   ### CLASS METHODS:
   
+  def self.clean!
+    Notification.not_in(:'statuses.state' => ['queued', 'in_progress', 'failed']).destroy_all
+  end
+  
   def self.notify_applications(notification_id)
     notification = find(notification_id)
 
