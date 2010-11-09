@@ -28,13 +28,20 @@ class Notifier
     status.start!
     
     begin
-      response = HTTParty.post(notifier.endpoint, :queue   => notification.queue,
-                                                  :message => notification.message)
+      response = HTTParty.post(
+        notifier.endpoint,
+        :body => {
+          :queue   => notification.queue,
+          :message => notification.message
+        }
+      )
     rescue => e
       response = e
     end
+
+    response_code = response.code.to_i rescue nil
     
-    if response && response.respond_to?(:code) && HTTP_SUCCESS_CODES.include?(response.code.to_i)
+    if response_code && HTTP_SUCCESS_CODES.include?(response_code)
       status.close!
     else
       status.exception = response.inspect
