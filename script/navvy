@@ -24,14 +24,21 @@ class Runner
     end
     
     def graceful
-      `kill -s QUIT #{pid}"` if pid
+      while pid.present?
+        `kill -s QUIT #{pid}"`
+        sleep 1
+      end
+      
       start
     end
 
     def stop
       raise "Cannot kill that which does not exist" unless pid
-      `kill #{pid}`
-      `kill #{pid}`
+      
+      while pid.present?
+        `kill #{pid}`
+        sleep 1
+      end
     end
     
     def restart
