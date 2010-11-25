@@ -6,3 +6,7 @@ staging:
   password: "whats the frequency"
   rails_env: "production"
   branch: "master"
+  settings: |
+    production:
+      server:
+        workers: 2

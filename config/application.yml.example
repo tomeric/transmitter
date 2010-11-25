@@ -1,0 +1,9 @@
+defaults: &DEFAULTS
+  server:
+    workers: 2
+
+production:
+  <<: *DEFAULTS
+
+development:
+  <<: *DEFAULTS

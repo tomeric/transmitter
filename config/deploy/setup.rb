@@ -20,6 +20,7 @@ namespace :app do
   desc "Create shared directories and write application.yml in shared path"
   task :setup do
     directories
+    settings
   end
   
   desc "Create shared directories"
@@ -33,6 +34,11 @@ namespace :app do
     run <<-CMD
       #{commands.join(" && ")}
     CMD
+  end
+  
+  desc "Write application.yml in shared path"
+  task :settings do
+    put fetch(:settings), "#{shared_path}/config/application.yml"
   end
 end
 

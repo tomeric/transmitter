@@ -1,5 +1,6 @@
 set :normal_symlinks, %w(
   config/mongoid.yml
+  config/application.yml
   .bundle
   tmp
   log

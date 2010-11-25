@@ -1,8 +1,13 @@
-rails_env = ENV['RAILS_ENV'] || 'production'
-APP_PATH  = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+APP_ENV  = ENV['RAILS_ENV'] || 'production'
+APP_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-# 16 workers and 1 master
-worker_processes rails_env == 'production' ? 16 : 4
+require 'settingslogic'
+class Configuration < Settingslogic
+  source    "#{APP_PATH}/config/application.yml"
+  namespace "#{APP_ENV}"
+end
+
+worker_processes Configuration.server.workers
 
 # Load rails+transmitter into master before forking workers
 # for super fast worker spawn times:
@@ -47,5 +52,5 @@ after_fork do |server, worker|
   # Unicorn master loads the app then forks off workers - because of the way
   # Unix forking works, we need to make sure we aren't using any of the parent's
   # sockets, e.g. db connection 
-  Mongoid.database.connection.connect
+  ActiveRecord::Base.establish_connection
 end

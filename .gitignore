@@ -8,3 +8,4 @@ tmp/**/*
 config/database.yml
 config/mongoid.yml
 config/deploy/sites.yml
+config/application.yml
